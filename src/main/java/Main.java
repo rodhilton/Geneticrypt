@@ -42,7 +42,7 @@ public class Main {
             System.out.println(bestFit);
 
             //if the abs val of last 5 average minus this score is < a specified value, print and exit
-            if(previousScores.isFull() && bestFitScore - previousScores.average() < HALT_THRESHOLD) {
+            if(previousScores.isFull() && previousScores.sameAs(bestFitScore, MIN_GENERATIONS)) {
                 System.out.println("done");
                 System.exit(0);
             }

@@ -1,11 +1,11 @@
 package util;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class ScoreKeeper {
     private LinkedList<Double> queue;
     private int size;
+    private static final double SAME_THRESHOLD = .01;
 
     public ScoreKeeper(int size) {
         this.queue = new LinkedList<Double>();
@@ -29,5 +29,17 @@ public class ScoreKeeper {
 
     public boolean isFull() {
         return size == queue.size();
+    }
+
+    public boolean sameAs(double bestFitScore, int howMany) {
+        for(int i=1;i<=howMany;i++) {
+            int index = queue.size() - i;
+            double score = queue.get(index);
+            if(Math.abs(bestFitScore - score) > SAME_THRESHOLD) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
