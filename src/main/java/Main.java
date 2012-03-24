@@ -1,26 +1,37 @@
+import genes.GeneSequence;
+import genes.GeneticSearch;
+import org.apache.commons.collections.buffer.CircularFifoBuffer;
+import simple.SimpleCalculator;
+import simple.SimpleSearch;
+import util.ScoreKeeper;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    private static final int MIN_GENERATIONS = 50;
+    private static final double HALT_THRESHOLD = 0;
     private static final int POPULATION_SIZE = 20;
 
+
     public static void main(String[] args) {
-        List<SimpleSequence> population = new ArrayList<SimpleSequence>(POPULATION_SIZE);
+
+        GeneticSearch search = new SimpleSearch();
+
+        List<GeneSequence> population = new ArrayList<GeneSequence>(POPULATION_SIZE);
         for (int i = 0; i < POPULATION_SIZE; i++) {
-            SimpleSequence gene = new SimpleSequence();
-            gene.randomize();
-            population.add(gene);
+            population.add(search.init());
         }
 
-        while (true) {
-            SimpleCalculator calc = new SimpleCalculator();
+        ScoreKeeper previousScores = new ScoreKeeper(MIN_GENERATIONS);
 
-            SimpleSequence bestFit = population.get(0);
-            double bestFitScore = calc.getFitness(bestFit);
+        while (true) {
+            GeneSequence bestFit = population.get(0);
+            double bestFitScore = search.score(bestFit);
 
             for (int i = 1; i < population.size(); i++) {
-                SimpleSequence sequence = population.get(i);
-                double score = calc.getFitness(sequence);
+                GeneSequence sequence = population.get(i);
+                double score = search.score(sequence);
 
                 if (score > bestFitScore) {
                     bestFitScore = score;
@@ -28,19 +39,21 @@ public class Main {
                 }
             }
 
-            System.out.println(bestFit.getSequence());
+            System.out.println(bestFit);
 
-            if(bestFit.getSequence().matches("^A+$")) {
+            //if the abs val of last 5 average minus this score is < a specified value, print and exit
+            if(previousScores.isFull() && bestFitScore - previousScores.average() < HALT_THRESHOLD) {
                 System.out.println("done");
                 System.exit(0);
             }
+
+            previousScores.add(bestFitScore);
 
             population.clear();
             for (int i = 0; i < POPULATION_SIZE; i++) {
                 population.add(bestFit.mutate());
             }
         }
-
 
     }
 }

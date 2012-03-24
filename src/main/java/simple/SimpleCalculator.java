@@ -1,4 +1,9 @@
+package simple;
+
+import genes.FitnessCalculator;
+
 public class SimpleCalculator implements FitnessCalculator<SimpleSequence> {
+
     @Override
     public double getFitness(SimpleSequence sequence) {
         String s = sequence.getSequence();
