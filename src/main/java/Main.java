@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    private static final int MIN_GENERATIONS = 50;
+    private static final int MIN_GENERATIONS = 5000;
     private static final double HALT_THRESHOLD = 0;
     private static final int POPULATION_SIZE = 20;
 
 
     public static void main(String[] args) {
 
-        GeneticSearch search = new SimpleSearch();
+        SortSearch search = new SortSearch();
 
-        List<GeneSequence> population = new ArrayList<GeneSequence>(POPULATION_SIZE);
+        List<LetterSequence> population = new ArrayList<LetterSequence>(POPULATION_SIZE);
         for (int i = 0; i < POPULATION_SIZE; i++) {
             population.add(search.init());
         }
@@ -26,11 +26,11 @@ public class Main {
         ScoreKeeper previousScores = new ScoreKeeper(MIN_GENERATIONS);
 
         while (true) {
-            GeneSequence bestFit = population.get(0);
+            LetterSequence bestFit = population.get(0);
             double bestFitScore = search.score(bestFit);
 
             for (int i = 1; i < population.size(); i++) {
-                GeneSequence sequence = population.get(i);
+                LetterSequence sequence = population.get(i);
                 double score = search.score(sequence);
 
                 if (score > bestFitScore) {
