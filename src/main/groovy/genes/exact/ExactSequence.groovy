@@ -13,7 +13,16 @@ class ExactSequence implements GeneSequence {
     String sequence
 
     ExactSequence(String goalString) {
-        this(shuffle(goalString), goalString)
+        this(generate(goalString), goalString)
+    }
+
+    static String generate(String s) {
+        StringBuilder sb=new StringBuilder();
+        Random rand=new Random();
+        for(int i=0;i<s.length();i++) {
+            sb.append(s.charAt(rand.nextInt(s.length())))
+        }
+        return sb.toString();
     }
 
     private ExactSequence(String sequence, String goalString) {
@@ -34,7 +43,7 @@ class ExactSequence implements GeneSequence {
         sb.setCharAt(index1, sequence.charAt(index2));
         sb.setCharAt(index2, temp);
 
-        return new ExactSequence(sb.toString());
+        return new ExactSequence(sb.toString(), goalString);
     }
 
     def String toString() {
@@ -43,6 +52,16 @@ class ExactSequence implements GeneSequence {
 
     @Override
     double score() {
-        return -StringUtils.getLevenshteinDistance(sequence, goalString)
+        double count=0;
+        char[] seqArray = sequence.toCharArray()
+        char[] goalArray = goalString.toCharArray()
+        for(int i=0;i<seqArray.length;i++) {
+            char x = seqArray[i]
+            char y = goalArray[i]
+            if(x==y) {
+                count++;
+            }
+        }
+        return count;
     }
 }
