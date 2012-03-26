@@ -1,33 +1,24 @@
-package simple
+package genes.simple
 
 import genes.GeneSequence
-import genes.GeneticSearch
 
-class SimpleSearch implements GeneticSearch<SimpleSequence> {
+class SimpleSequence implements GeneSequence {
     private static int LENGTH = 26;
-    private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private String state;
+    private static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    def state
 
-    @Override
-    GeneSequence init() {
+    SimpleSequence() {
+        this(randomize());
+    }
+
+    static String randomize() {
         StringBuilder temp = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < LENGTH; i++) {
             temp.append(alphabet.charAt(random.nextInt(alphabet.length())));
         }
-        return new SimpleSequence(temp.toString());
+        return temp.toString()
     }
-
-    @Override
-    double score(SimpleSequence sequence) {
-        return new SimpleCalculator().getFitness(sequence)
-    }
-
-}
-
-class SimpleSequence implements GeneSequence {
-    private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    def state
 
     SimpleSequence(String state) {
         this.state = state
@@ -52,5 +43,16 @@ class SimpleSequence implements GeneSequence {
 
     public String toString() {
         return state
+    }
+
+    @Override
+    double score() {
+        int count = 0;
+        for (char c: state.toCharArray()) {
+            if (c == 'A') {
+                count++;
+            }
+        }
+        return count;
     }
 }

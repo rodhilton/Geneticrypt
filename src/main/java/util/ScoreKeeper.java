@@ -27,6 +27,10 @@ public class ScoreKeeper {
         return sum / queue.size();
     }
 
+    public double getLast() {
+        return queue.getLast();
+    }
+
     public boolean isFull() {
         return size == queue.size();
     }
