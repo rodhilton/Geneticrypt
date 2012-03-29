@@ -51,21 +51,21 @@ public class FrequencyAnalyzer {
         for (String text : texts) {
             for (int i = 0; i < text.length(); i++) {
                 {
-                    String monoSub = substring(text, i, i + 1);
+                    String monoSub = substring(text, i, i + 1).toLowerCase();
                     if (MONOGRAM_PATTERN.matcher(monoSub).matches()) {
                         monogramCounts.put(monoSub, monogramCounts.get(monoSub) + 1);
                     }
                 }
 
                 {
-                    String biSub = substring(text, i, i + 2);
+                    String biSub = substring(text, i, i + 2).toLowerCase();
                     if (BIGRAM_PATTERN.matcher(biSub).matches()) {
                         bigramCounts.put(biSub, bigramCounts.get(biSub) + 1);
                     }
                 }
 
                 {
-                    String triSub = substring(text, i, i + 3);
+                    String triSub = substring(text, i, i + 3).toLowerCase();
                     if (TRIGRAM_PATTERN.matcher(triSub).matches()) {
                         trigramCounts.put(triSub, trigramCounts.get(triSub) + 1);
                     }

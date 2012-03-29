@@ -17,11 +17,21 @@ import java.util.regex.Pattern;
 public class SampleFrequencies {
 
     private static String SAMPLE_PATH="/sampletext/";
-    private static String[] SAMPLES = new String[]{"hamlet"}; 
+    private static String[] SAMPLES = new String[]{"hamlet", "novelascortas", "princessofmars", "huckfinn", "aliceinwonderland", "prideandprejudice"};
     
     public static Map<String, Double> getMonograms() {
         return SampleFrequencyHolder.getInstance().getMonograms();
     }
+
+    public static Map<String,Double> getBigrams() {
+        return SampleFrequencyHolder.getInstance().getBigrams();
+    }
+
+    public static Map<String,Double> getTrigrams() {
+        return SampleFrequencyHolder.getInstance().getTrigrams();
+    }
+
+
 
     private static class SampleFrequencyHolder {
         private static final SampleFrequencyHolder INSTANCE = new SampleFrequencyHolder();
@@ -33,11 +43,6 @@ public class SampleFrequencies {
 
         private SampleFrequencyHolder() {    
             Collection<String> samples = ResourceList.getResources(Pattern.compile(".*/sampletext/.*"));
-            String file=(String)samples.toArray()[0];
-            for(String sample: SAMPLES) {
-                InputStream is = getClass().getResourceAsStream(SAMPLE_PATH+sample);
-
-            }
             
             String[] shit = Lists.transform(Arrays.asList(SAMPLES), new Function<String, String>() {
 
@@ -59,6 +64,14 @@ public class SampleFrequencies {
 
         public Map<String, Double> getMonograms() {
             return frequencyAnalyzer.getMonograms();
+        }
+
+        public Map<String,Double> getBigrams() {
+            return frequencyAnalyzer.getBigrams();
+        }
+
+        public Map<String,Double> getTrigrams() {
+            return frequencyAnalyzer.getTrigrams();
         }
     }
 }
