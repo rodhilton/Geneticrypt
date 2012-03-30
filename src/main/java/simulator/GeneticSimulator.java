@@ -49,6 +49,7 @@ public class GeneticSimulator<T extends GeneSequence> {
             previousScores.add(bestFitScore);
 
             population.clear();
+            //population.add(bestFit); //Include the previous generation's best fit as well
             for (int i = 0; i < POPULATION_SIZE; i++) {
                 population.add((T) bestFit.mutate());
             }
