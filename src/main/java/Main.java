@@ -5,6 +5,8 @@ import genes.crypt.CryptSequence;
 import genes.exact.ExactSequence;
 import genes.simple.SimpleSequence;
 import simulator.GeneticSimulator;
+import simulator.GeneticSimulatorImpl;
+import util.UpdateCallback;
 
 public class Main {
 
@@ -16,7 +18,14 @@ public class Main {
         Cipher cipher = new MonoSubstitutionCipher(key);
         final String cipherText = cipher.encrypt(plainText);
 
-        GeneticSimulator<CryptSequence> geneticSimulator = new GeneticSimulator<CryptSequence>();
+        GeneticSimulator<CryptSequence> geneticSimulator = new GeneticSimulatorImpl<CryptSequence>();
+
+        geneticSimulator.registerUpdates(new UpdateCallback<CryptSequence>() {
+            @Override
+            public void call(CryptSequence object) {
+                System.out.println(object+" "+object.score());
+            }
+        });
 
         geneticSimulator.simulate(new Supplier<CryptSequence>() {
 
