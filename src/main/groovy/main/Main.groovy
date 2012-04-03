@@ -1,17 +1,17 @@
 package main
 
 import com.google.common.base.Supplier
-import genes.simple.SimpleSequence
+
 import simulator.GeneticSimulator
 import genes.exact.ExactSequence
-import simulator.GeneticSimulatorImpl
+import simulator.ThreadedGeneticSimulator
 import util.UpdateCallback
 
 class Main {
 
     static void main(String[] args) {
 
-        GeneticSimulator<ExactSequence> geneticSimulator = new GeneticSimulatorImpl<ExactSequence>();
+        GeneticSimulator<ExactSequence> geneticSimulator = new ThreadedGeneticSimulator<ExactSequence>();
         geneticSimulator.registerUpdates(new UpdateCallback<ExactSequence>() {
             @Override
             void call(ExactSequence object) {
