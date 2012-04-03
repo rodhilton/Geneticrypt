@@ -4,6 +4,7 @@ import ciphers.MonoSubstitutionCipher
 import genes.GeneSequence
 import util.FrequencyAnalyzer
 import util.SampleFrequencies
+import org.apache.commons.lang.StringUtils
 
 class CryptSequence implements GeneSequence {
 
@@ -22,7 +23,8 @@ class CryptSequence implements GeneSequence {
     }
 
     String toString() {
-        new MonoSubstitutionCipher(key).decrypt(cipherText)
+        def decrypt = new MonoSubstitutionCipher(key).decrypt(cipherText)
+        "${StringUtils.abbreviate(decrypt,70)} (${key}) - ${score()}"
     }
 
     @Override
@@ -51,12 +53,12 @@ class CryptSequence implements GeneSequence {
             def cipher = new MonoSubstitutionCipher(key)
             def possiblePlainText = cipher.decrypt(cipherText)
 
-            Map<String, Double> textBigrams = new FrequencyAnalyzer(possiblePlainText).getBigrams()
-            def englishBigrams = SampleFrequencies.getBigrams()
+            Map<String, Double> textTrigrams = new FrequencyAnalyzer(possiblePlainText).getTrigrams()
+            def englishTrigrams = SampleFrequencies.getTrigrams()
 
             def difference = 0
-            textBigrams.each {String key, Double value ->
-                difference += Math.abs(value - englishBigrams.get(key))
+            textTrigrams.each {String key, Double value ->
+                difference += Math.abs(value - englishTrigrams.get(key))
             }
 
             cachedScore = -difference;
