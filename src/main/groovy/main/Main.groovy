@@ -4,12 +4,21 @@ import com.google.common.base.Supplier
 import genes.simple.SimpleSequence
 import simulator.GeneticSimulator
 import genes.exact.ExactSequence
+import simulator.GeneticSimulatorImpl
+import util.UpdateCallback
 
 class Main {
 
     static void main(String[] args) {
 
-        GeneticSimulator<ExactSequence> geneticSimulator = new GeneticSimulator<ExactSequence>();
+        GeneticSimulator<ExactSequence> geneticSimulator = new GeneticSimulatorImpl<ExactSequence>();
+        geneticSimulator.registerUpdates(new UpdateCallback<ExactSequence>() {
+            @Override
+            void call(ExactSequence object) {
+                System.out.println(object+" "+object.score());
+            }
+
+        })
 
         geneticSimulator.simulate(new Supplier<ExactSequence>() {
 

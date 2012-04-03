@@ -1,15 +1,16 @@
 package genes.crypt
 
-import genes.GeneSequence
 import ciphers.MonoSubstitutionCipher
+import genes.GeneSequence
 import util.FrequencyAnalyzer
 import util.SampleFrequencies
 
 class CryptSequence implements GeneSequence {
 
-    private final static String ALPHABET ="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final static String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private String key
     private String cipherText
+    private Double cachedScore = null;
 
     CryptSequence(String cipherText) {
         this(ALPHABET.toList().sort {new Random().nextInt() }.join(""), cipherText)
@@ -44,18 +45,22 @@ class CryptSequence implements GeneSequence {
     }
 
     @Override
-    double score() {
-        def cipher = new MonoSubstitutionCipher(key)
-        def possiblePlainText = cipher.decrypt(cipherText)
+    synchronized double score() {
+        if (cachedScore == null) {
 
-        Map<String, Double> textBigrams = new FrequencyAnalyzer(possiblePlainText).getBigrams()
-        def englishBigrams = SampleFrequencies.getBigrams()
+            def cipher = new MonoSubstitutionCipher(key)
+            def possiblePlainText = cipher.decrypt(cipherText)
 
-        def difference = 0
-        textBigrams.each {String key, Double value ->
-            difference += Math.abs(value - englishBigrams.get(key))
+            Map<String, Double> textBigrams = new FrequencyAnalyzer(possiblePlainText).getBigrams()
+            def englishBigrams = SampleFrequencies.getBigrams()
+
+            def difference = 0
+            textBigrams.each {String key, Double value ->
+                difference += Math.abs(value - englishBigrams.get(key))
+            }
+
+            cachedScore = -difference;
         }
-
-        -difference
+        cachedScore
     }
 }
