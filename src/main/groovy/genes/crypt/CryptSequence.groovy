@@ -24,7 +24,7 @@ class CryptSequence implements GeneSequence {
 
     String toString() {
         def decrypt = new MonoSubstitutionCipher(key).decrypt(cipherText)
-        "${StringUtils.abbreviate(decrypt,70)} (${key}) - ${score()}"
+        "${StringUtils.abbreviate(decrypt,90)} (${key})"
     }
 
     @Override
