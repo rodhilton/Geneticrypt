@@ -9,7 +9,7 @@ import java.util.List;
 public class GeneticSimulatorImpl<T extends GeneSequence> extends GeneticSimulator<T> {
     private static final int MIN_GENERATIONS = 500;
     private static final double HALT_THRESHOLD = 0;
-    private static final int POPULATION_SIZE = 20;
+    private static final int POPULATION_SIZE = 100;
 
     @Override
     protected T findBest(List<T> population) {
