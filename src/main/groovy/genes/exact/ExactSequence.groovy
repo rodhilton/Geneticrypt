@@ -1,8 +1,6 @@
 package genes.exact
 
 import genes.GeneSequence
-import static util.Util.shuffle
-import org.apache.commons.lang.StringUtils
 
 /**
  * A sequence which is evaluated according to how closely it matches an exact string.

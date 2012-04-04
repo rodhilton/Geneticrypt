@@ -18,7 +18,7 @@ import java.util.concurrent.Future;
 import static com.google.common.collect.Collections2.transform;
 
 public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSimulator<T> {
-    private static final int POPULATION_SIZE = 150;
+    private static final int POPULATION_SIZE = 100;
 
     @Override
     protected T findBest(List<T> population) {

@@ -5,6 +5,7 @@ import genes.GeneSequence
 import util.FrequencyAnalyzer
 import util.SampleFrequencies
 import org.apache.commons.lang.StringUtils
+import static util.Util.shuffle
 
 class CryptSequence implements GeneSequence {
 
@@ -12,14 +13,16 @@ class CryptSequence implements GeneSequence {
     private String key
     private String cipherText
     private Double cachedScore = null;
+    private Random random
 
-    CryptSequence(String cipherText) {
-        this(ALPHABET.toList().sort {new Random().nextInt() }.join(""), cipherText)
+    CryptSequence(String cipherText, Random random) {
+        this(shuffle(ALPHABET, random), cipherText, random)
     }
 
-    private CryptSequence(String newKey, String cipherText) {
+    private CryptSequence(String newKey, String cipherText, Random random) {
         this.key = newKey
         this.cipherText = cipherText
+        this.random = random
     }
 
     String toString() {
@@ -30,7 +33,6 @@ class CryptSequence implements GeneSequence {
     @Override
     CryptSequence mutate() {
         //Swaps two elements
-        Random random = new Random();
         int index1 = random.nextInt(key.length())
         int index2 = random.nextInt(key.length())
 
@@ -42,7 +44,7 @@ class CryptSequence implements GeneSequence {
         sb.setCharAt(index2, temp);
 
 
-        CryptSequence newSequence = new CryptSequence(sb.toString(), cipherText);
+        CryptSequence newSequence = new CryptSequence(sb.toString(), cipherText, random);
         return newSequence;
     }
 
