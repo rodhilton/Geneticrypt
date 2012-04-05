@@ -1,7 +1,0 @@
-design notes
-
-want a console interpreter which interacts with some kind of Runner class, which takes the various options as interpreted by commandline and returns, via callback methods, various data
-
-then runner asks a simulation factory for a simulator and runs that. simulators are going to probably be some kind of abstract class hierarchy so i can easily drop in
-different heuristics like simulated annealing, etc.
-
