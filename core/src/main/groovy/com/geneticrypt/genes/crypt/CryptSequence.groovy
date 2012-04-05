@@ -27,21 +27,33 @@ class CryptSequence implements GeneSequence {
 
     String toString() {
         def decrypt = new MonoSubstitutionCipher(key).decrypt(cipherText)
-        "${StringUtils.abbreviate(decrypt, 90)} (${key})"
+        "${StringUtils.abbreviate(decrypt, 90)} (${key}) = ${score()}"
     }
 
     @Override
     CryptSequence mutate() {
 
-        if(random.nextBoolean()) {
             smallMutation()
-        } else {
-            largeMutation()
-        }
     }
 
     def largeMutation() {
+        int index1 = random.nextInt(key.length())
+        int index2 = random.nextInt(key.length())
+        int index3 = random.nextInt(key.length())
+        int index4 = random.nextInt(key.length())
 
+        int[] indices = [index1,index2,index3,index4];
+        Arrays.sort(indices);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(key.substring(0,indices[0]));
+        sb.append(key.substring(indices[2],indices[3]));
+        sb.append(key.substring(indices[1],indices[2]));
+        sb.append(key.substring(indices[0],indices[1]));
+        sb.append(key.substring(indices[3]))
+
+        CryptSequence newSequence = new CryptSequence(sb.toString(), cipherText, random);
+        return newSequence;
     }
 
     def smallMutation() {

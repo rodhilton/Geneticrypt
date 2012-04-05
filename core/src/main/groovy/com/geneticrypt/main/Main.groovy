@@ -6,12 +6,13 @@ import com.geneticrypt.genes.exact.ExactSequence
 import com.geneticrypt.simulator.ThreadedGeneticSimulator
 import com.geneticrypt.util.UpdateCallback
 import com.geneticrypt.simulator.GeneticSimulator
+import com.geneticrypt.simulator.ThreadedKickingGeneticSimulator
 
 class Main {
 
     static void main(String[] args) {
 
-        GeneticSimulator<ExactSequence> geneticSimulator = new ThreadedGeneticSimulator<ExactSequence>();
+        GeneticSimulator<ExactSequence> geneticSimulator = new ThreadedKickingGeneticSimulator<ExactSequence>();
         geneticSimulator.registerUpdates(new UpdateCallback<ExactSequence>() {
             @Override
             void call(ExactSequence object) {
