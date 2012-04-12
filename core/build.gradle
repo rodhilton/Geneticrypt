@@ -11,6 +11,7 @@ task wrapper(type: Wrapper) {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
