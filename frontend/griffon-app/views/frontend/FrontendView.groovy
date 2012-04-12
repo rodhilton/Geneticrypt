@@ -10,7 +10,29 @@ application(title: 'frontend',
                imageIcon('/griffon-icon-32x32.png').image,
                imageIcon('/griffon-icon-16x16.png').image]) {
     // add content here
+//
+//     gridLayout(cols: 2, rows: 3)
+//        label 'Cipher Text:'
+//    textArea columns: 20, text: bind('cipherText', target: model)
+//    label 'Username:'
+//    textField columns: 20, text: bind('username', target: model)
+//    label ''
+//    button "Crack!"
 
-    label('Content Goes Here') // delete me
-    textField("blah")
+
+    panel() {
+        label(id: "outputLabel",
+                text: "Cipher Text:")
+        gridLayout(cols:1, rows: 2)
+
+        textArea(id: "nameInput",
+                    columns: 10)
+                    //actionPerformed: {controller.textEntered()})
+
+//        hbox(constraints:NORTH) {
+//            textArea(id: "nameInput",
+//                    columns: 10)
+//                    //actionPerformed: {controller.textEntered()})
+//        }
+    }
 }
