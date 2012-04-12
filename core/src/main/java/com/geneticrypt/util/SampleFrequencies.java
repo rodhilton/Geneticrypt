@@ -16,8 +16,8 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class SampleFrequencies {
 
-    private static final String SAMPLE_PATH = "/sampletext/";
-    private static final Pattern SAMPLE_TEXT_PATTERN = Pattern.compile(".*" + SAMPLE_PATH + "(.*)$");
+    private static final String SAMPLE_PATH = SampleFrequencies.class.getPackage().getName().replace(".","/");
+    private static final Pattern SAMPLE_TEXT_PATTERN = Pattern.compile(".*" + SAMPLE_PATH + "/(.*\\.txt)$");
 
     public static Map<String, Double> getMonograms() {
         return SampleFrequencyHolder.getInstance().getMonograms();
@@ -49,7 +49,7 @@ public class SampleFrequencies {
                     Matcher matcher = SAMPLE_TEXT_PATTERN.matcher(samplePath);
                     if (matcher.matches()) {
                         String sampleName = matcher.group(1);
-                        InputStream is = getClass().getResourceAsStream(SAMPLE_PATH + sampleName);
+                        InputStream is = getClass().getResourceAsStream(sampleName);
                         try {
                             return CharStreams.toString(new InputStreamReader(is));
                         } catch (IOException e) {

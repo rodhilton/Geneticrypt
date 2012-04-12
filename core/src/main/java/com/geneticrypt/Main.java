@@ -29,7 +29,7 @@ public class Main {
         final String cipherText = cipher.encrypt(plainText);
         final Random random = new SecureRandom();
 
-        GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedKickingGeneticSimulator<CryptSequence>();
+        GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedGeneticSimulator<CryptSequence>();
 
         geneticSimulator.registerUpdates(new UpdateCallback<CryptSequence>() {
             @Override

@@ -14,6 +14,7 @@ class CryptSequence implements GeneSequence {
     private String cipherText
     private Double cachedScore = null;
     private Random random
+    private Double kickProbability = 0.5D
 
     CryptSequence(String cipherText, Random random) {
         this(shuffle(ALPHABET, random), cipherText, random)
@@ -27,51 +28,35 @@ class CryptSequence implements GeneSequence {
 
     String toString() {
         def decrypt = new MonoSubstitutionCipher(key).decrypt(cipherText)
-        "${StringUtils.abbreviate(decrypt, 90)} (${key}) = ${score()}"
+        "${StringUtils.abbreviate(decrypt, 90).replaceAll("[^A-Z]","")} (${key}) = ${score()}"
     }
 
     @Override
     CryptSequence mutate() {
-
-            smallMutation()
+            if(random.nextDouble() < kickProbability) {
+                randomSequence()
+            } else {
+                mutatedSequence()
+            }
     }
 
-    def largeMutation() {
-        int index1 = random.nextInt(key.length())
-        int index2 = random.nextInt(key.length())
-        int index3 = random.nextInt(key.length())
-        int index4 = random.nextInt(key.length())
-
-        int[] indices = [index1,index2,index3,index4];
-        Arrays.sort(indices);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(key.substring(0,indices[0]));
-        sb.append(key.substring(indices[2],indices[3]));
-        sb.append(key.substring(indices[1],indices[2]));
-        sb.append(key.substring(indices[0],indices[1]));
-        sb.append(key.substring(indices[3]))
-
-        CryptSequence newSequence = new CryptSequence(sb.toString(), cipherText, random);
-        return newSequence;
-    }
-
-    def smallMutation() {
-        //Swaps two elements
+    private CryptSequence mutatedSequence() {
         int index1 = random.nextInt(key.length())
         int index2 = random.nextInt(key.length())
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(key);
-
+        StringBuilder sb = new StringBuilder()
+        sb.append(key)
         char temp = key.charAt(index1)
-        sb.setCharAt(index1, key.charAt(index2));
-        sb.setCharAt(index2, temp);
+        sb.setCharAt(index1, key.charAt(index2))
+        sb.setCharAt(index2, temp)
 
-
-        CryptSequence newSequence = new CryptSequence(sb.toString(), cipherText, random);
-        return newSequence;
+        new CryptSequence(sb.toString(), cipherText, random)
     }
+
+    private CryptSequence randomSequence() {
+        new CryptSequence(cipherText, random)
+    }
+
 
     @Override
     synchronized double score() {
@@ -80,16 +65,33 @@ class CryptSequence implements GeneSequence {
             def cipher = new MonoSubstitutionCipher(key)
             def possiblePlainText = cipher.decrypt(cipherText)
 
-            Map<String, Double> textTrigrams = new FrequencyAnalyzer(possiblePlainText).getTrigrams()
-            def englishTrigrams = SampleFrequencies.getTrigrams()
+            def analyzer = new FrequencyAnalyzer(possiblePlainText)
 
-            def difference = 0
-            textTrigrams.each {String key, Double value ->
-                difference += Math.abs(value - englishTrigrams.get(key))
-            }
 
-            cachedScore = -difference;
+            def monogramDifference = diff(SampleFrequencies.getMonograms(), analyzer.getMonograms())
+            def bigramDifference = diff(SampleFrequencies.getBigrams(), analyzer.getBigrams())
+            def trigramDifference = diff(SampleFrequencies.getTrigrams(), analyzer.getTrigrams())
+
+           //def t=(monogramDifference+bigramDifference)/4
+           // cachedScore = Math.pow(t, 8)
+
+            def monoWeight = 0.2D
+            def biWeight = 0.3D
+            def triWeight = 0.5D
+
+            cachedScore = monoWeight * (1-monogramDifference) + biWeight * (1-bigramDifference) + triWeight * (1-trigramDifference)
+
+//            cachedScore = Math.pow((1D-difference),8)
         }
         cachedScore
+    }
+
+    private def diff(Map<String, Double> knownGrams, Map<String, Double> checkGrams) {
+        def difference = 0
+        knownGrams.each {String key, Double value ->
+            def abs = Math.abs(value - checkGrams.get(key))
+            difference += abs
+        }
+        difference
     }
 }
