@@ -165,8 +165,8 @@ griffon.project.dependency.resolution = {
 
         // uncomment the below to enable remote dependency resolution
         // from public Maven repositories
-        //mavenLocal()
-        //mavenCentral()
+        mavenLocal()
+        mavenCentral()
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -175,6 +175,7 @@ griffon.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime' or 'test' scopes eg.
 
+        compile 'com.geneticrypt:geneticrypt-core:SNAPSHOT'
         // runtime 'mysql:mysql-connector-java:5.1.5'
     }
 }

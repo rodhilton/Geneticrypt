@@ -5,3 +5,5 @@ root {
         view = '*'
     }
 }
+
+root.'griffon.builder.abeilleform.AbeilleFormBuilder'.view = '*'

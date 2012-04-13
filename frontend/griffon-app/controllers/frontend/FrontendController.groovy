@@ -1,5 +1,6 @@
 package frontend
 
+
 class FrontendController {
     // these will be injected by Griffon
     def model
