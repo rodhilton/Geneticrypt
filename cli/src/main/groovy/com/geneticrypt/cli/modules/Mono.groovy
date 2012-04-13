@@ -21,7 +21,8 @@ class Mono implements Module{
         addOption("k", "key", true, "key to use for encryption")
         addOption("f", "file", true, "file to encrypt")
         addOption("s", "stdin", false, "read from standard in")
-        addOption("p", "plaintext", true, "plaintext to encrypt")
+        addOption("t", "text", true, "text to encrypt/decrypt")
+        addOption("d", "decrypt", false, "decrypt text instead of encrypt it")
     }}
 
     @Override
@@ -34,13 +35,22 @@ class Mono implements Module{
             def key = cmd.getOptionValue("k")
             def cipher = new MonoSubstitutionCipher(key)
 
+            def text
             if(cmd.hasOption("s")){
-                def plaintext= Util.readFromStdin()
-                println cipher.encrypt(plaintext)
-            } else if(cmd.hasOption("p")) {
-                def plaintext = cmd.getOptionValue("p")
-                println cipher.encrypt(plaintext)
+                text= Util.readFromStdin()
+            } else if(cmd.hasOption("t")) {
+                text = cmd.getOptionValue("t")
+            } else {
+                //file
+                text="NOT IMPLEMENTED"
             }
+
+            if(cmd.hasOption("d")) {
+                println(cipher.decrypt(text))
+            } else {
+                println cipher.encrypt(text)
+            }
+
         } else {
             printHelp()
         }
