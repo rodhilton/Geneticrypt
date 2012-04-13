@@ -88,8 +88,8 @@ class CryptSequence implements GeneSequence {
 
     private def diff(Map<String, Double> knownGrams, Map<String, Double> checkGrams) {
         def difference = 0
-        knownGrams.each {String key, Double value ->
-            def abs = Math.abs(value - checkGrams.get(key))
+        checkGrams.each {String key, Double value ->
+            def abs = Math.abs(knownGrams.get(key) - value)
             difference += abs
         }
         difference
