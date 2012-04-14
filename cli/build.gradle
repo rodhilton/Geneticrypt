@@ -3,7 +3,6 @@ apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'application'
 
-id="cli"
 group = "com.geneticrypt"
 version = "SNAPSHOT"
 mainClassName = "com.geneticrypt.cli.Main"
