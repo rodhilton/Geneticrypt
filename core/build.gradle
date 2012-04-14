@@ -2,8 +2,7 @@ apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'maven'
 
-id="geneticrypt"
-group = "com.geneticrypt"
+group = "com.nomachetejuggling.geneticrypt"
 version = "SNAPSHOT"
 
 task wrapper(type: Wrapper) {
