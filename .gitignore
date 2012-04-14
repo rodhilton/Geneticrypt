@@ -5,3 +5,5 @@ gradle/
 *.iml
 *.iws
 out/
+/frontend/GuiDesign/nbproject/private/
+/frontend/GuiDesign/build/
