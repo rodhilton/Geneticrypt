@@ -22,13 +22,13 @@ class CryptSequence implements GeneSequence {
 
     private CryptSequence(String newKey, String cipherText, Random random) {
         this.key = newKey
-        this.cipherText = cipherText
+        this.cipherText = cipherText.replaceAll("[^A-Z]","")
         this.random = random
     }
 
     String toString() {
         def decrypt = new MonoSubstitutionCipher(key).decrypt(cipherText)
-        "${StringUtils.abbreviate(decrypt, 90).replaceAll("[^A-Z]","")} (${key}) = ${score()}"
+        "${StringUtils.abbreviate(decrypt, 90)} (${key}) = ${score()}"
     }
 
     @Override
