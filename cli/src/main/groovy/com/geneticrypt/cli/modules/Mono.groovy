@@ -37,8 +37,7 @@ class Mono extends Module{
             } else if(cmd.hasOption("t")) {
                 text = cmd.getOptionValue("t")
             } else {
-                //file
-                text="NOT IMPLEMENTED"
+                text = new File(cmd.getOptionValue("f")).text
             }
 
             if(cmd.hasOption("d")) {
