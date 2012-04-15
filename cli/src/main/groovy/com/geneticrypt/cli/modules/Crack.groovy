@@ -32,15 +32,21 @@ class Crack extends Module {
 
     @Override
     void process(CommandLine cmd) {
+        def text;
         if (cmd.hasOption("s")) {
-            def ciphertext = readFromStdin()
+            text = readFromStdin()
             crack(ciphertext)
         } else if (cmd.hasOption("c")) {
-            def ciphertext = cmd.getOptionValue("c")
+            text = cmd.getOptionValue("c")
             crack(ciphertext)
+        } else if (cmd.hasOption("f")) {
+            text = new File(cmd.getOptionValue("f")).text
         } else {
             printHelp()
+            return
         }
+
+        crack(text)
     }
 
     void crack(final String ciphertext) {
