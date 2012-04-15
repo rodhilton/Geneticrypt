@@ -1,38 +1,34 @@
 package frontend
 
-application(title: 'frontend',
+application(title: 'Geneticrypt',
   preferredSize: [800, 600],
   pack: true,
   //location: [50,50],
   locationByPlatform:true,
-  iconImage: imageIcon('/griffon-icon-48x48.png').image,
-  iconImages: [imageIcon('/griffon-icon-48x48.png').image,
-               imageIcon('/griffon-icon-32x32.png').image,
-               imageIcon('/griffon-icon-16x16.png').image]) {
-    // add content here
-//
-//     gridLayout(cols: 2, rows: 3)
-//        label 'Cipher Text:'
-//    textArea columns: 20, text: bind('cipherText', target: model)
-//    label 'Username:'
-//    textField columns: 20, text: bind('username', target: model)
-//    label ''
-//    button "Crack!"
+  iconImage: imageIcon('/geneticrypt-icon-64x64.png').image,
+  iconImages: [imageIcon('/geneticrypt-icon-48x48.png').image,
+               imageIcon('/geneticrypt-icon-32x32.png').image,
+               imageIcon('/geneticrypt-icon-16x16.png').image]) {
 
+    panel(border:emptyBorder(6)) {
+        borderLayout()
 
-    panel() {
-        label(id: "outputLabel",
-                text: "Cipher Text:")
-        gridLayout(cols:1, rows: 2)
+        label(constraints: NORTH, text:"Cipher Text:")
 
-        textArea(id: "nameInput",
-                    columns: 10)
-                    //actionPerformed: {controller.textEntered()})
+        scrollPane(constraints:CENTER) {
+            textArea(id:"cipherText", text:bind(target:model, targetProperty:'cipherText'),
+                    editable: bind {!model.running},
+                    columns:40, rows:10, lineWrap: true, font:new Font(Font.MONOSPACED, Font.PLAIN, 12))
+        }
 
-//        hbox(constraints:NORTH) {
-//            textArea(id: "nameInput",
-//                    columns: 10)
-//                    //actionPerformed: {controller.textEntered()})
-//        }
+        hbox(constraints:SOUTH) {
+            button(text:bind{model.availableAction}, actionPerformed:controller.&action)
+            hstrut(5)
+            label("Key:")
+            hstrut(5)
+            textField(text:bind {model.key}, editable: false)
+        }
     }
+
+
 }

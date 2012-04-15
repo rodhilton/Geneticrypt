@@ -1,5 +1,5 @@
 application {
-    title = 'Frontend'
+    title = 'Geneticrypt Frontend'
     startupGroups = ['frontend']
 
     // Should Griffon exit when no Griffon created frames are showing?

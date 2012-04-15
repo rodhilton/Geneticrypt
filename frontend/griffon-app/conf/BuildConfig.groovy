@@ -175,7 +175,7 @@ griffon.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime' or 'test' scopes eg.
 
-        compile 'com.geneticrypt:geneticrypt-core:SNAPSHOT'
+        compile 'com.nomachetejuggling.geneticrypt:geneticrypt-core:SNAPSHOT'
         // runtime 'mysql:mysql-connector-java:5.1.5'
     }
 }
