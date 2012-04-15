@@ -67,6 +67,10 @@
         <object class="com.jformdesigner.model.FormLayoutManager"> 
          <class>javax.swing.JScrollPane</class> 
         </object> 
+        <void method="setProperty"> 
+         <string>horizontalScrollBarPolicy</string> 
+         <int>31</int> 
+        </void> 
         <void property="name"> 
          <string>cipherScrollPane</string> 
         </void> 
@@ -75,9 +79,20 @@
           <string>javax.swing.JTextArea</string> 
           <void method="setProperty"> 
            <string>font</string> 
-           <object class="com.jformdesigner.model.SwingFont"> 
-            <string>TextArea.font</string> 
+           <object class="com.jformdesigner.model.SwingDerivedFont"> 
+            <string>Courier</string> 
+            <int>0</int> 
+            <int>0</int> 
+            <boolean>false</boolean> 
            </object> 
+          </void> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <string>hello world this is a test of some stuff and some junk and i like to make words wrap</string> 
+          </void> 
+          <void method="setProperty"> 
+           <string>lineWrap</string> 
+           <boolean>true</boolean> 
           </void> 
           <void property="name"> 
            <string>cipherTextArea</string> 

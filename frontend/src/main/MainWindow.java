@@ -51,9 +51,12 @@ public class MainWindow extends JPanel {
 
         //======== cipherScrollPane ========
         {
+            cipherScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
             //---- cipherTextArea ----
-            cipherTextArea.setFont(UIManager.getFont("TextArea.font"));
+            cipherTextArea.setFont(new Font("Courier", cipherTextArea.getFont().getStyle(), cipherTextArea.getFont().getSize()));
+            cipherTextArea.setText("hello world this is a test of some stuff and some junk and i like to make words wrap");
+            cipherTextArea.setLineWrap(true);
             cipherScrollPane.setViewportView(cipherTextArea);
         }
         add(cipherScrollPane, new GridBagConstraints(0, 1, 1, 1, 10.0, 2.0,
