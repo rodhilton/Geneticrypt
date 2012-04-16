@@ -1,4 +1,4 @@
-package com.geneticrypt.cli.util
+package com.nomachetejuggling.geneticrypt.cli.util
 
 class Util {
     static String readFromStdin() {

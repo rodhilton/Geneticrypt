@@ -1,12 +1,12 @@
-package com.geneticrypt.cli.modules
+package com.nomachetejuggling.geneticrypt.cli.modules
 
 import org.apache.commons.cli.Options
 
 import org.apache.commons.cli.CommandLine
 
 import static java.util.Collections.shuffle
-import com.geneticrypt.cli.ModuleName
-import com.geneticrypt.cli.Module
+import com.nomachetejuggling.geneticrypt.cli.ModuleName
+import com.nomachetejuggling.geneticrypt.cli.Module
 
 @ModuleName("keygen")
 class KeyGen extends Module {
