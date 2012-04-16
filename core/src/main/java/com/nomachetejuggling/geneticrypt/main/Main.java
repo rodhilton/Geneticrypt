@@ -38,7 +38,7 @@ public class Main {
 
         System.out.println("Random seed: "+seed);
 
-        final GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedGeneticSimulator<CryptSequence>();
+        final GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedGeneticSimulator<CryptSequence>(75);
 
         final AtomicInteger generationCount = new AtomicInteger();
 
