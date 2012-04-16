@@ -18,7 +18,11 @@ import java.util.concurrent.Future;
 import static com.google.common.collect.Collections2.transform;
 
 public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSimulator<T> {
-    private static final int POPULATION_SIZE = 75;
+    private int populationSize;
+
+    public ThreadedGeneticSimulator(int populationSize) {
+        this.populationSize = populationSize;
+    }
 
     @Override
     protected T findBest(List<T> population) {
@@ -62,7 +66,7 @@ public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSim
                 try {
                     return input.get();
                 } catch (Exception e) {
-                    throw new RuntimeException("Problem while computing result");
+                    throw new RuntimeException("Problem while computing result", e);
                 }
             }
         });
@@ -72,7 +76,7 @@ public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSim
     protected List<T> newPopulationFrom(T bestFit) {
         List<T> population = new ArrayList<T>();
         population.add(bestFit); //Include the previous generation's best fit as well
-        for (int i = 0; i < POPULATION_SIZE-1; i++) {
+        for (int i = 0; i < populationSize-1; i++) {
             population.add((T) bestFit.mutate());
         }
         return population;
@@ -80,24 +84,22 @@ public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSim
 
     @Override
     protected List<T> createInitialPopulation(Supplier<T> supplier) {
-        List<T> population = new ArrayList<T>(POPULATION_SIZE);
-        for (int i = 0; i < POPULATION_SIZE; i++) {
+        List<T> population = new ArrayList<T>(populationSize);
+        for (int i = 0; i < populationSize; i++) {
             population.add(supplier.get());
         }
         return population;
     }
 
     private class Scorer<T extends GeneSequence> implements Callable<Result<T>> {
-
         private T gene;
 
-        Scorer(T blah) {
-            this.gene = blah;
+        Scorer(T gene) {
+            this.gene = gene;
         }
 
         @Override
         public Result<T> call() throws Exception {
-
             return new Result<T>(gene, gene.score());
         }
     }
