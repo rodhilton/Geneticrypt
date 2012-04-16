@@ -36,8 +36,11 @@ class Mono extends Module{
                 text= Util.readFromStdin()
             } else if(cmd.hasOption("t")) {
                 text = cmd.getOptionValue("t")
-            } else {
+            } else if(cmd.hasOption("f")){
                 text = new File(cmd.getOptionValue("f")).text
+            } else {
+                printHelp()
+                return
             }
 
             if(cmd.hasOption("d")) {
