@@ -1,4 +1,4 @@
-package com.geneticrypt.cli;
+package com.nomachetejuggling.geneticrypt.cli;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

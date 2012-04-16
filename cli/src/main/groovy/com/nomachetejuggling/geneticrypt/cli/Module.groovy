@@ -1,4 +1,4 @@
-package com.geneticrypt.cli
+package com.nomachetejuggling.geneticrypt.cli
 
 import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.Options

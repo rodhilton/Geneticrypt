@@ -5,7 +5,7 @@ apply plugin: 'application'
 
 group = "com.geneticrypt"
 version = "SNAPSHOT"
-mainClassName = "com.geneticrypt.cli.Main"
+mainClassName = "com.nomachetejuggling.geneticrypt.cli.Main"
 
 repositories {
     mavenLocal()
@@ -46,7 +46,7 @@ dependencies {
 
     compile 'commons-cli:commons-cli:1.2'
 
-    compile 'com.geneticrypt:geneticrypt-core:SNAPSHOT'
+    compile 'com.nomachetejuggling.geneticrypt:geneticrypt-core:SNAPSHOT'
 }
 
 

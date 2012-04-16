@@ -1,8 +1,8 @@
-package com.geneticrypt.cli
+package com.nomachetejuggling.geneticrypt.cli
 
-import com.geneticrypt.cli.modules.KeyGen
-import com.geneticrypt.cli.modules.Mono
-import com.geneticrypt.cli.modules.Crack
+import com.nomachetejuggling.geneticrypt.cli.modules.KeyGen
+import com.nomachetejuggling.geneticrypt.cli.modules.Mono
+import com.nomachetejuggling.geneticrypt.cli.modules.Crack
 
 class Main {
 

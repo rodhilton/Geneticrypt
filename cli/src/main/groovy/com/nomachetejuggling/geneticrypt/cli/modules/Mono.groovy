@@ -1,14 +1,14 @@
-package com.geneticrypt.cli.modules
+package com.nomachetejuggling.geneticrypt.cli.modules
 
-import com.geneticrypt.cli.ModuleName
-import com.geneticrypt.cli.Module
+import com.nomachetejuggling.geneticrypt.cli.ModuleName
+import com.nomachetejuggling.geneticrypt.cli.Module
 import org.apache.commons.cli.Options
 
 import org.apache.commons.cli.CommandLine
 
-import com.geneticrypt.ciphers.MonoSubstitutionCipher
+import com.nomachetejuggling.geneticrypt.ciphers.MonoSubstitutionCipher
 
-import com.geneticrypt.cli.util.Util
+import com.nomachetejuggling.geneticrypt.cli.util.Util
 
 @ModuleName("mono")
 class Mono extends Module{

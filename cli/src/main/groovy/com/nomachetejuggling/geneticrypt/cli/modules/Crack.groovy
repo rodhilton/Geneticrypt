@@ -1,20 +1,19 @@
-package com.geneticrypt.cli.modules
+package com.nomachetejuggling.geneticrypt.cli.modules
 
-import com.geneticrypt.cli.Module
-import com.geneticrypt.cli.ModuleName
+import com.nomachetejuggling.geneticrypt.cli.Module
+import com.nomachetejuggling.geneticrypt.cli.ModuleName
 import org.apache.commons.cli.Options
-import org.apache.commons.cli.CommandLineParser
-import org.apache.commons.cli.GnuParser
+
 import org.apache.commons.cli.CommandLine
 
-import static com.geneticrypt.cli.util.Util.readFromStdin
+import static com.nomachetejuggling.geneticrypt.cli.util.Util.readFromStdin
 
 import java.security.SecureRandom
-import com.geneticrypt.genes.crypt.CryptSequence
-import com.geneticrypt.simulator.GeneticSimulator
-import com.geneticrypt.simulator.ThreadedGeneticSimulator
-import com.geneticrypt.util.UpdateCallback
+import com.nomachetejuggling.geneticrypt.genes.crypt.CryptSequence
+import com.nomachetejuggling.geneticrypt.simulators.genetic.ThreadedGeneticSimulator
+import com.nomachetejuggling.geneticrypt.util.UpdateCallback
 import com.google.common.base.Supplier
+import com.nomachetejuggling.geneticrypt.simulators.genetic.GeneticSimulator
 
 @ModuleName("crack")
 class Crack extends Module {
@@ -25,7 +24,7 @@ class Crack extends Module {
             {
                 addOption("f", "file", true, "file to crack")
                 addOption("s", "stdin", false, "read crack text from standard in")
-                addOption("c", "cipertext", true, "ciphertext to crack")
+                addOption("t", "text", true, "ciphertext to crack")
             }
         }
     }
@@ -35,10 +34,8 @@ class Crack extends Module {
         def text;
         if (cmd.hasOption("s")) {
             text = readFromStdin()
-            crack(ciphertext)
-        } else if (cmd.hasOption("c")) {
-            text = cmd.getOptionValue("c")
-            crack(ciphertext)
+        } else if (cmd.hasOption("t")) {
+            text = cmd.getOptionValue("t")
         } else if (cmd.hasOption("f")) {
             text = new File(cmd.getOptionValue("f")).text
         } else {
@@ -52,7 +49,7 @@ class Crack extends Module {
     void crack(final String ciphertext) {
         final Random random = new SecureRandom();
 
-        GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedGeneticSimulator<CryptSequence>();
+        GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedGeneticSimulator<CryptSequence>(75);
 
         geneticSimulator.registerUpdates(new UpdateCallback<CryptSequence>() {
             @Override

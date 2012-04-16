@@ -46,7 +46,7 @@ class FrontendController {
 
             model.originalCipherText = model.cipherText
 
-            simulator = new ThreadedGeneticSimulator<CryptSequence>();
+            simulator = new ThreadedGeneticSimulator<CryptSequence>(75);
 
             simulator.registerUpdates(new UpdateCallback<CryptSequence>() {
                 @Override
