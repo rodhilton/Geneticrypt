@@ -122,7 +122,7 @@ deploy {
         }
         icon {
             'default' {
-                name   = 'griffon-icon-64x64.png'
+                name   = 'geneticrypt-icon-64x64.png'
                 width  = '64'
                 height = '64'
             }
@@ -132,22 +132,22 @@ deploy {
                 height = '123'
             }
             selected {
-                name   = 'griffon-icon-64x64.png'
+                name   = 'geneticrypt-icon-64x64.png'
                 width  = '64'
                 height = '64'
             }
             disabled {
-                name   = 'griffon-icon-64x64.png'
+                name   = 'geneticrypt-icon-64x64.png'
                 width  = '64'
                 height = '64'
             }
             rollover {
-                name   = 'griffon-icon-64x64.png'
+                name   = 'geneticrypt-icon-64x64.png'
                 width  = '64'
                 height = '64'
             }
             shortcut {
-                name   = 'griffon-icon-64x64.png'
+                name   = 'geneticrypt-icon-64x64.png'
                 width  = '64'
                 height = '64'
             }

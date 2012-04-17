@@ -27,6 +27,9 @@ application(title: 'Geneticrypt',
             label("Key:")
             hstrut(5)
             textField(text:bind {model.key}, editable: false)
+            hstrut(5)
+            label(text: "Generation: ")
+            label(text: bind{model.generation})
         }
     }
 
