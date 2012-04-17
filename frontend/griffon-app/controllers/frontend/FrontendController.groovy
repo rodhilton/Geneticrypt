@@ -17,6 +17,7 @@ class FrontendController {
     def view
 
     GeneticSimulator<CryptSequence> simulator
+    AtomicInteger generation
 
     // void mvcGroupInit(Map args) {
     //    // this method is called after model and view are injected
@@ -46,11 +47,13 @@ class FrontendController {
 
             model.originalCipherText = model.cipherText
 
+            generation = new AtomicInteger()
             simulator = new ThreadedGeneticSimulator<CryptSequence>(75);
 
             simulator.registerUpdates(new UpdateCallback<CryptSequence>() {
                 @Override
                 public void call(CryptSequence object) {
+                    model.generation = generation.getAndIncrement()
                     model.key = object.getKey();
                     String potentialPlaintext = new MonoSubstitutionCipher(object.getKey()).decrypt(model.originalCipherText);
                     view.cipherText.setText(potentialPlaintext)
