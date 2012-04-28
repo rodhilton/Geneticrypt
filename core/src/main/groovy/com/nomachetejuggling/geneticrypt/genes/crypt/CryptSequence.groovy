@@ -1,20 +1,20 @@
 package com.nomachetejuggling.geneticrypt.genes.crypt
 
 import com.nomachetejuggling.geneticrypt.ciphers.MonoSubstitutionCipher
-import com.nomachetejuggling.geneticrypt.genes.GeneSequence
+import com.nomachetejuggling.geneticrypt.genes.Candidate
 import com.nomachetejuggling.geneticrypt.util.FrequencyAnalyzer
 import com.nomachetejuggling.geneticrypt.util.SampleFrequencies
 import org.apache.commons.lang.StringUtils
 import static com.nomachetejuggling.geneticrypt.util.Util.shuffle
 
-class CryptSequence implements GeneSequence {
+class CryptSequence implements Candidate {
 
     private final static String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private String key
     private String cipherText
     private Double cachedScore = null;
     private Random random
-    private Double kickProbability = 0.5D
+//    private Double kickProbability = 0.5D
 
     CryptSequence(String cipherText, Random random) {
         this(shuffle(ALPHABET, random), cipherText, random)
@@ -33,11 +33,11 @@ class CryptSequence implements GeneSequence {
 
     @Override
     CryptSequence mutate() {
-            if(random.nextDouble() < kickProbability) {
-                randomSequence()
-            } else {
+//            if(random.nextDouble() < kickProbability) {
+//                randomSequence()
+//            } else {
                 mutatedSequence()
-            }
+            //}
     }
 
     private CryptSequence mutatedSequence() {

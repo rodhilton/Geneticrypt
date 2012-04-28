@@ -1,9 +1,9 @@
 package com.nomachetejuggling.geneticrypt.genes.sort
 
-import com.nomachetejuggling.geneticrypt.genes.GeneSequence
+import com.nomachetejuggling.geneticrypt.genes.Candidate
 import static com.nomachetejuggling.geneticrypt.util.Util.shuffle
 
-class LetterSequence implements GeneSequence {
+class LetterSequence implements Candidate {
     String alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     String state
 

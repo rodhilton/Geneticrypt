@@ -1,6 +1,6 @@
 package com.nomachetejuggling.geneticrypt.genes;
 
-public interface GeneSequence {
-    public GeneSequence mutate();
+public interface Candidate {
+    public Candidate mutate();
     public double score();
 }

@@ -1,8 +1,8 @@
 package com.nomachetejuggling.geneticrypt.genes.simple
 
-import com.nomachetejuggling.geneticrypt.genes.GeneSequence
+import com.nomachetejuggling.geneticrypt.genes.Candidate
 
-class SimpleSequence implements GeneSequence {
+class SimpleSequence implements Candidate {
     private static int LENGTH = 26;
     private static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     def state

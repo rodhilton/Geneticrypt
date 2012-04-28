@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
-import com.nomachetejuggling.geneticrypt.genes.GeneSequence;
+import com.nomachetejuggling.geneticrypt.genes.Candidate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,11 +17,15 @@ import java.util.concurrent.Future;
 
 import static com.google.common.collect.Collections2.transform;
 
-public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSimulator<T> {
+public class ThreadedGeneticSimulator<T extends Candidate> extends GeneticSimulator<T> {
     private int populationSize;
 
     public ThreadedGeneticSimulator(int populationSize) {
         this.populationSize = populationSize;
+    }
+
+    protected int getPopulationSize() {
+        return populationSize;
     }
 
     @Override
@@ -75,8 +79,8 @@ public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSim
     @Override
     protected List<T> newPopulationFrom(T bestFit) {
         List<T> population = new ArrayList<T>();
-        population.add(bestFit); //Include the previous generation's best fit as well
-        for (int i = 0; i < populationSize-1; i++) {
+        //population.add(bestFit); //Include the previous generation's best fit as well
+        for (int i = 0; i < populationSize; i++) {
             population.add((T) bestFit.mutate());
         }
         return population;
@@ -91,7 +95,7 @@ public class ThreadedGeneticSimulator<T extends GeneSequence> extends GeneticSim
         return population;
     }
 
-    private class Scorer<T extends GeneSequence> implements Callable<Result<T>> {
+    private class Scorer<T extends Candidate> implements Callable<Result<T>> {
         private T gene;
 
         Scorer(T gene) {

@@ -1,15 +1,14 @@
 package com.nomachetejuggling.geneticrypt.simulators.genetic;
 
 import com.google.common.base.Supplier;
-import com.nomachetejuggling.geneticrypt.genes.GeneSequence;
+import com.nomachetejuggling.geneticrypt.genes.Candidate;
 import com.nomachetejuggling.geneticrypt.simulators.Simulator;
-import com.nomachetejuggling.geneticrypt.util.EndCondition;
 import com.nomachetejuggling.geneticrypt.util.UpdateCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GeneticSimulator<T extends GeneSequence> implements Simulator<T> {
+public abstract class GeneticSimulator<T extends Candidate> implements Simulator<T> {
 
     private List<UpdateCallback<T>> registered = new ArrayList<UpdateCallback<T>>();
     private boolean stop = false;
