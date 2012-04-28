@@ -39,7 +39,7 @@ public class FrequencyAnalyzer {
 
         texts.each { text ->
             //Remove punctuation and lower-case the string
-            text = text.toLowerCase().replaceAll(/[^A-Za-z \t\r\n]/,"")
+            text = text.toLowerCase().replaceAll(/[^A-Za-z]/,"")
 
             for (int i = 0; i < text.length(); i++) {
                 String monoSub = safeSubstring(text, i, 1)

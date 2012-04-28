@@ -1,11 +1,11 @@
 package com.nomachetejuggling.geneticrypt.genes.exact
 
-import com.nomachetejuggling.geneticrypt.genes.GeneSequence
+import com.nomachetejuggling.geneticrypt.genes.Candidate
 
 /**
  * A sequence which is evaluated according to how closely it matches an exact string.
  */
-class ExactSequence implements GeneSequence {
+class ExactSequence implements Candidate {
 
     String goalString
     String sequence
@@ -29,7 +29,7 @@ class ExactSequence implements GeneSequence {
     }
 
     @Override
-    GeneSequence mutate() {
+    Candidate mutate() {
         Random random = new Random();
         int index1 = random.nextInt(sequence.length())
         int index2 = random.nextInt(sequence.length())

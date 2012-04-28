@@ -18,12 +18,12 @@ class BenchmarkText {
     }
 
     public String getText(int length) {
+        StringBuilder sb = new StringBuilder()
         def offset = random.nextInt(words.size())
-        List<String> textwords = []
-        for (int i=0;i<length;i++) {
-            textwords << words[(i+offset) % words.size()]
+        for (int i=0;sb.length() < length;i++) {
+            sb.append(words[(i+offset) % words.size()])
         }
-        return textwords.join(" ");
+        return sb.substring(0,length)
     }
 
     private static final String SAMPLE_TEXT = "\"Well, of all the hare-brained proposals I ever listened to, this takes\n" +
