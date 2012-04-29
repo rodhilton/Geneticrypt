@@ -19,25 +19,25 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.nomachetejuggling.geneticrypt.util.Util.shuffle;
 
-public class CipherTextLengthBenchmark {
+public class GenerationsIndependentBenchmark {
     private static Random random = new SecureRandom();
-    private static final int[] CIPHERTEXT_LENGTHS = new int[]{100, 200, 300, 400, 500, 750, 1000, 1250, 1500, 2000};
-    private static final int MAX_GENERATIONS = 100;
-    private static final int TRIALS = 10;
+    private static final int[] GENERATION_SIZES = new int[]{10,20,30,40,50,75,100,125,150,200};
+    private static final int TRIALS = 5;
+    private static final int CIPHER_LENGTH = 1000;
 
     public static void main(String[] args) {
         BenchmarkText benchmarkText = new BenchmarkText(random);
 
-        System.out.println("#Len,Med,Avg,Min,Max,StdDev");
+        System.out.println("#Gen,Median,Avg,Max,Std.Dev");
 
-        for (int cipherTextLength : CIPHERTEXT_LENGTHS) {
+        for (final int maxGenerations : GENERATION_SIZES) {
+
             //List<Integer> trialResults = new ArrayList<Integer>();
             DescriptiveStatistics stats = new DescriptiveStatistics();
 
-
             for (int trialNum = 0; trialNum < TRIALS; trialNum++) {
 
-                String text = benchmarkText.getText(cipherTextLength);
+                String text = benchmarkText.getText(CIPHER_LENGTH);
                 String key = shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ", random);
                 final String cipherText = new MonoSubstitutionCipher(key).encrypt(text);
 
@@ -61,7 +61,7 @@ public class CipherTextLengthBenchmark {
                         lastKey.set(object.getKey());
                         int count = generationCount.incrementAndGet();
 
-                        if (count > MAX_GENERATIONS) {
+                        if (count > maxGenerations) {
                             evolutionarySimulator.requestStop();
                         }
                     }
@@ -79,8 +79,10 @@ public class CipherTextLengthBenchmark {
             //the range should really be the standard deviation
             //It should also include the max, if possible, to be graphed separately
 
-            System.out.format("%s,%s,%s,%s,%s,%s\n", cipherTextLength, stats.getPercentile(50), stats.getMean(),  stats.getMin(), stats.getMax(), stats.getStandardDeviation());
+            System.out.format("%s,%s,%s,%s,%s\n", maxGenerations,stats.getPercentile(50),stats.getMean(), stats.getMax(),stats.getStandardDeviation());
         }
+        //Line break to separate each of the chunks of population sizes
+        System.out.println("");
     }
 
     static int lettersRight(CharSequence s1, CharSequence s2) {

@@ -2,21 +2,22 @@ package frontend
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import com.nomachetejuggling.geneticrypt.*
 import com.nomachetejuggling.geneticrypt.genes.crypt.CryptSequence
-import com.nomachetejuggling.geneticrypt.simulators.genetic.GeneticSimulator
+
 import com.nomachetejuggling.geneticrypt.util.UpdateCallback
 import com.google.common.base.Supplier
-import com.nomachetejuggling.geneticrypt.simulators.genetic.ThreadedGeneticSimulator
+
 import com.nomachetejuggling.geneticrypt.ciphers.MonoSubstitutionCipher
 import java.security.SecureRandom
+import com.nomachetejuggling.geneticrypt.simulators.genetic.EvolutionarySimulator
+import com.nomachetejuggling.geneticrypt.simulators.genetic.ThreadedEvolutionarySimulator
 
 class FrontendController {
     // these will be injected by Griffon
     def model
     def view
 
-    GeneticSimulator<CryptSequence> simulator
+    EvolutionarySimulator<CryptSequence> simulator
     AtomicInteger generation
 
     // void mvcGroupInit(Map args) {
@@ -48,7 +49,7 @@ class FrontendController {
             model.originalCipherText = model.cipherText
 
             generation = new AtomicInteger()
-            simulator = new ThreadedGeneticSimulator<CryptSequence>(75);
+            simulator = new ThreadedEvolutionarySimulator<CryptSequence>(75);
 
             simulator.registerUpdates(new UpdateCallback<CryptSequence>() {
                 @Override

@@ -17,33 +17,47 @@ import java.util.concurrent.Future;
 
 import static com.google.common.collect.Collections2.transform;
 
-public class ThreadedGeneticSimulator<T extends Candidate> extends GeneticSimulator<T> {
-    private int populationSize;
+//TODO: refactor: threading should be somethign you get for free by extending a class and implementing some simple methods.  All simulators
+//should be threaded.
 
-    public ThreadedGeneticSimulator(int populationSize) {
-        this.populationSize = populationSize;
+public class ThreadedEvolutionarySimulator<T extends Candidate> extends EvolutionarySimulator<T> {
+    private int populationSize;
+    private int selectSize;
+
+    public ThreadedEvolutionarySimulator(int populationSize) {
+        this(populationSize, 1);
     }
 
-    protected int getPopulationSize() {
-        return populationSize;
+    public ThreadedEvolutionarySimulator(int populationSize, int selectSize) {
+        this.populationSize = populationSize;
+        this.selectSize = selectSize;
+
+        if (populationSize % selectSize != 0) {
+            throw new IllegalArgumentException("population size must be a multiple of selection size. Called with population size " + populationSize + ", selection size of " + selectSize);
+        }
     }
 
     @Override
-    protected T findBest(List<T> population) {
+    protected Collection<T> select(Collection<T> population) {
         try {
             ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
             List<Future<Result<T>>> futures = executor.invokeAll(scorersFor(population));
             executor.shutdown();
 
-            return scoreOrdering().max(resultsOf(futures)).getGene();
+            return transform(scoreOrdering().greatestOf(resultsOf(futures), selectSize), new Function<Result<T>, T>() {
+                @Override
+                public T apply(Result<T> input) {
+                    return input.getGene();
+                }
+            });
 
         } catch (InterruptedException e) {
             throw new RuntimeException("Could not invoke threads", e);
         }
     }
 
-    private Collection<Callable<Result<T>>> scorersFor(List<T> population) {
+    private Collection<Callable<Result<T>>> scorersFor(Collection<T> population) {
         return transform(population, new Function<T, Callable<Result<T>>>() {
             @Override
             public Callable<Result<T>> apply(T input) {
@@ -77,12 +91,18 @@ public class ThreadedGeneticSimulator<T extends Candidate> extends GeneticSimula
     }
 
     @Override
-    protected List<T> newPopulationFrom(T bestFit) {
+    protected Collection<T> newPopulationFrom(Collection<T> selected) {
+
         List<T> population = new ArrayList<T>();
-        //population.add(bestFit); //Include the previous generation's best fit as well
-        for (int i = 0; i < populationSize; i++) {
-            population.add((T) bestFit.mutate());
+
+        for (T bestFit : selected) {
+            for (int i = 0; i < populationSize / selectSize; i++) {
+                population.add((T) bestFit.mutate());
+            }
         }
+
+        assert population.size() == populationSize;
+
         return population;
     }
 
