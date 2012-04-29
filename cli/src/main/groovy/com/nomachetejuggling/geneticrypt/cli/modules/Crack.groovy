@@ -10,10 +10,12 @@ import static com.nomachetejuggling.geneticrypt.cli.util.Util.readFromStdin
 
 import java.security.SecureRandom
 import com.nomachetejuggling.geneticrypt.genes.crypt.CryptSequence
-import com.nomachetejuggling.geneticrypt.simulators.genetic.ThreadedGeneticSimulator
+
 import com.nomachetejuggling.geneticrypt.util.UpdateCallback
 import com.google.common.base.Supplier
-import com.nomachetejuggling.geneticrypt.simulators.genetic.GeneticSimulator
+
+import com.nomachetejuggling.geneticrypt.simulators.genetic.EvolutionarySimulator
+import com.nomachetejuggling.geneticrypt.simulators.genetic.ThreadedEvolutionarySimulator
 
 @ModuleName("crack")
 class Crack extends Module {
@@ -49,7 +51,7 @@ class Crack extends Module {
     void crack(final String ciphertext) {
         final Random random = new SecureRandom();
 
-        GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedGeneticSimulator<CryptSequence>(75);
+        EvolutionarySimulator<CryptSequence> geneticSimulator = new ThreadedEvolutionarySimulator<CryptSequence>(75);
 
         geneticSimulator.registerUpdates(new UpdateCallback<CryptSequence>() {
             @Override

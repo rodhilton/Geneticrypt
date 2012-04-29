@@ -1,16 +1,22 @@
 package com.nomachetejuggling.geneticrypt.main;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Ordering;
 import com.nomachetejuggling.geneticrypt.ciphers.Cipher;
 import com.nomachetejuggling.geneticrypt.ciphers.MonoSubstitutionCipher;
 import com.google.common.base.Supplier;
 import com.nomachetejuggling.geneticrypt.genes.crypt.CryptSequence;
-import com.nomachetejuggling.geneticrypt.simulators.genetic.GeneticSimulator;
-import com.nomachetejuggling.geneticrypt.simulators.genetic.ThreadedGeneticSimulator;
-import com.nomachetejuggling.geneticrypt.util.EndCondition;
+import com.nomachetejuggling.geneticrypt.simulators.genetic.EvolutionarySimulator;
+import com.nomachetejuggling.geneticrypt.simulators.genetic.ThreadedEvolutionarySimulator;
 import com.nomachetejuggling.geneticrypt.util.UpdateCallback;
+
+import javax.annotation.Nullable;
+
 import static com.nomachetejuggling.geneticrypt.util.Util.similarity;
 
-import java.security.SecureRandom;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,23 +44,30 @@ public class Main {
 
         System.out.println("Random seed: "+seed);
 
-        final GeneticSimulator<CryptSequence> geneticSimulator = new ThreadedGeneticSimulator<CryptSequence>(75);
+        final EvolutionarySimulator<CryptSequence> evolutionarySimulator = new ThreadedEvolutionarySimulator<CryptSequence>(100,2);
 
         final AtomicInteger generationCount = new AtomicInteger();
 
-        geneticSimulator.registerUpdates(new UpdateCallback<CryptSequence>() {
+        evolutionarySimulator.registerUpdates(new UpdateCallback<CryptSequence>() {
             @Override
-            public void call(CryptSequence object) {
+            public void call(Collection<CryptSequence> selected) {
+                CryptSequence bestFit = Collections.max(selected, Ordering.natural().onResultOf(new Function<CryptSequence, Double>() {
+
+                    @Override
+                    public Double apply(CryptSequence input) {
+                        return input.score();
+                    }
+                }));
+
                 int count = generationCount.incrementAndGet();
-                System.out.println(String.format("%03d: ", count)+object);
-                String potentialPlaintext = new MonoSubstitutionCipher(object.getKey()).decrypt(cipherText);
-                if(count > 500 || similarity(potentialPlaintext, plainText) > .999) {
-                    geneticSimulator.requestStop();
+                System.out.println(String.format("%03d: ", count)+bestFit);
+                if(count > 500 || similarity(key, bestFit.getKey()) > .90) {
+                    evolutionarySimulator.requestStop();
                 }
             }
         });
 
-        geneticSimulator.simulate(new Supplier<CryptSequence>() {
+        evolutionarySimulator.simulate(new Supplier<CryptSequence>() {
 
             @Override
             public CryptSequence get() {

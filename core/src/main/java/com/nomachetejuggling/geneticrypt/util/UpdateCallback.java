@@ -1,5 +1,7 @@
 package com.nomachetejuggling.geneticrypt.util;
 
+import java.util.Collection;
+
 public interface UpdateCallback<T> {
-    void call(T object);
+    void call(Collection<T> selected);
 }
