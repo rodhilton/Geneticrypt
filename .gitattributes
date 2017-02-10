@@ -1,2 +1,3 @@
 *.groovy linguist-language=Groovy
 *.gradle linguist-language=Groovy
+simulators/**/*.java linguist-vendored
