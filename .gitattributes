@@ -1,0 +1,2 @@
+*.groovy linguist-language=Groovy
+*.gradle linguist-language=Groovy
