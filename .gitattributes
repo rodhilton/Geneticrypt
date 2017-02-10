@@ -2,3 +2,5 @@
 *.gradle linguist-language=Groovy
 core/src/main/java/com/nomachetejuggling/geneticrypt/simulators/* linguist-vendored
 core/src/main/java/com/nomachetejuggling/geneticrypt/benchmark/* linguist-vendored
+Cipher.java linguist-vendored
+Main.java linguist-vendored
