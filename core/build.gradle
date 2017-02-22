@@ -40,7 +40,7 @@ compileJava.enabled = false
 sourceSets.main.groovy.srcDirs = ["src/main/java", "src/main/groovy"]
 
 dependencies {
-    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.10'
+     compile group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.10'
 
     compile group: 'com.google.guava', name: 'guava', version: '10.0.1'
     compile 'commons-collections:commons-collections:3.2.1'

@@ -54,9 +54,10 @@ class Crack extends Module {
         EvolutionarySimulator<CryptSequence> geneticSimulator = new ThreadedEvolutionarySimulator<CryptSequence>(75);
 
         geneticSimulator.registerUpdates(new UpdateCallback<CryptSequence>() {
+
             @Override
-            public void call(CryptSequence object) {
-                println(object)
+            void call(Collection<CryptSequence> collection) {
+                println(collection)
             }
         });
 

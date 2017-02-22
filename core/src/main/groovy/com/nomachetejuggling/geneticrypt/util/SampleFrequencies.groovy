@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class SampleFrequencies {
+class SampleFrequencies {
 
     public static Map<String, Double> getMonograms() {
         return SampleFrequencyHolder.getInstance().getMonograms();
